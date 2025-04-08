@@ -11,8 +11,7 @@ export class DoctorController{
 
     @Post('register')
     async registerDoctor(@Body( new ValidationPipe()) doctor: registerdto){
-        
-        try {
+
             const doctorData: registerDoctorParams = {
                 name: doctor.name,
                 email: doctor.email,
@@ -20,12 +19,6 @@ export class DoctorController{
                 password: doctor.password,
                 userType: UserType.Doctor
             }
-
-            return await this.doctorService.registerDoctor(doctorData);
-            
-        } catch (error) {
-            throw new InternalServerErrorException(error.message);
-        }
-        
+        return await this.doctorService.registerDoctor(doctorData);
     }
 }

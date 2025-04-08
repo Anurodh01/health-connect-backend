@@ -1,22 +1,27 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserEntity } from "./entities/user.entity";
-import { DoctorEntity } from "./entities/doctor.entity";
 import { UserRepository } from "./repositories/user.repository";
 import { DoctorRepository } from "./repositories/doctor.repository";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 
 @Module({
-    imports:[ TypeOrmModule.forRoot({
-        type : 'mysql',
-        host : process.env.DB_HOST || 'localhost',
-        port : +process.env.DB_PORT || 3306,
-        username : process.env.DB_USER || 'root',
-        password : process.env.DB_PASS || 'root',
-        database : process.env.DB_NAME || 'healthconnectDB',
-        entities : [ UserEntity, DoctorEntity],
-        synchronize : false
-    })],
+    imports: [
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+                type: 'mysql',
+                host: configService.get<string>('database.host'),
+                port: configService.get<number>('database.port'),
+                username: configService.get<string>('database.username'),
+                password: configService.get<string>('database.password'),
+                database: configService.get('database.name'),
+                synchronize: false,
+                entities: ["dist/database/**/*.entity.js"],
+            }),
+            inject: [ConfigService]
+        })
+    ],
     providers:[UserRepository, DoctorRepository],
     exports: [UserRepository, DoctorRepository]
    

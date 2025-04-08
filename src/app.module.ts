@@ -8,11 +8,15 @@ import { UsersModule } from './users/users.module';
 import { DoctorModule } from './doctors/doctors.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { DatabaseConfig } from './config/database.config';
+import { GlobalExceptionHandler } from './filters/exception.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal:true
+      isGlobal: true,
+      load: [DatabaseConfig]
     }),
     JwtModule.register({
       global:true
@@ -24,7 +28,11 @@ import { JwtModule } from '@nestjs/jwt';
 
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionHandler
+    }],
 })
 export class AppModule {
 
