@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { DoctorRepository } from "src/database/repositories/doctor.repository";
 import { registerDoctorParams } from "src/utils/types";
 
@@ -26,7 +26,7 @@ export class DoctorService {
             
 
         } catch (error) {
-            throw new InternalServerErrorException(error.message);
+            throw new HttpException(error, HttpStatus.BAD_REQUEST);
         }
 
     }

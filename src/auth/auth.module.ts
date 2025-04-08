@@ -9,8 +9,7 @@ import { DatabaseModule } from "src/database/database.module";
 
 
 @Module({
-    imports:[
-        TypeOrmModule.forFeature([UserEntity, DoctorEntity]),
+    imports: [
         JwtModule.register({
             global:true
         }),
