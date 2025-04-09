@@ -33,8 +33,9 @@ export class DoctorController{
     @Post('profile')
     async createProfile(@Req() req: Request, @Body(new ValidationPipe()) profileDto: ProfileDto) {
         const authenticatedUser = req['user']
+
         let id = authenticatedUser?.id;
-        return instanceToPlain(await this.doctorService.createProfile(id, profileDto));
+        return await this.doctorService.createProfile(id, profileDto);
     }
 
     @Get('profile')

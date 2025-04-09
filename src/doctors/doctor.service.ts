@@ -52,7 +52,7 @@ export class DoctorService {
         }
         const profile = await this.profileRepository.createProfile(doctor, profiledto);
         doctor.profile = profile;
-        await this.doctorRepository.save(doctor);
+        const data = await this.doctorRepository.save(doctor);
         return profile;
     }
 

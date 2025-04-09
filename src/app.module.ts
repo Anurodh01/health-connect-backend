@@ -46,6 +46,13 @@ export class AppModule {
       {
         path: '/doctor/*',
         method: RequestMethod.ALL
+      },{
+        path : '/auth/doctor/logout',
+        method : RequestMethod.ALL
+      },
+      {
+        path : '/auth/user/logout',
+        method : RequestMethod.ALL
       }
     )
   }

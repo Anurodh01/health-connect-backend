@@ -14,6 +14,6 @@ export class ProfileRepository extends Repository<Profile>{
         const createdProfile = this.create(profile);
         createdProfile.doctor = doctor;
         console.log(createdProfile);
-        return this.save(createdProfile);
+        return await this.save(createdProfile);
     }
 }
