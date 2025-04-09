@@ -1,4 +1,4 @@
-import { Body, Controller, Get, InternalServerErrorException, Param, ParseIntPipe, Post, Req, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Req, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { DoctorService } from "./doctor.service";
 import { registerDoctorParams } from "src/utils/types";

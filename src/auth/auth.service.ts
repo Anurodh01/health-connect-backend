@@ -46,12 +46,46 @@ export class AuthService{
         return await bcrypt.compare(incomingpassword, savedPassword);
     }
 
-    loginUser(){
+    async loginUser(payload : logindto){
 
+        try{
+            const user = await this.userRepository.findByEMail(payload.email);
+
+            if(!user) throw new UnauthorizedException('Invalid credentials');
+
+            if(await this.comparePassword(payload.password, user.password)){
+
+                const userData = {
+                    id : user.id,
+                    name : user.name,
+                    email : user.email,
+                    phone : user.phone,
+                    userType : user.userType
+                }
+
+                const accessToken : string = await this.generateAccessToken(userData);
+
+                const refreshToken : string = await this.generateRefreshToken(user.id);
+
+                await this.userRepository.setRefreshToken(user.id, refreshToken);
+
+                return {accessToken, refreshToken, userData}
+            }else{
+                throw new UnauthorizedException('Invalid credentials');
+            }
+        } catch (error) {
+            throw new UnauthorizedException(error.message);
+        }
     }
 
-    logoutUser(){
+    async logoutUser(userId : number){
 
+        try{
+            await this.userRepository.clearRefreshToken(userId);
+            return true;
+        }catch (error){
+            throw new InternalServerErrorException('Something went wrong')
+        }
     }
 
     async logInDoctor(payload : logindto){
@@ -81,7 +115,9 @@ export class AuthService{
              await this.doctorRepository.setRefreshToken(doctor.id, refreshToken);
  
              return {accessToken, refreshToken, userDetails : payload}
-         }
+         }else{
+            throw new UnauthorizedException('Invalid credentials');
+        }
  
  
        } catch (error) {
