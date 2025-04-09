@@ -7,7 +7,7 @@ class Location{
         longitude: number;
 }
 
-@Entity({ name: 'profiles' })
+@Entity({ name: 'doctor_profiles' })
 export class Profile{
     @PrimaryGeneratedColumn({type: 'int'})
     id: number;

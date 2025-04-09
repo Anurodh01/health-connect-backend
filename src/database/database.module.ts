@@ -13,6 +13,7 @@ import { Profile } from "./entities/profile.entity";
 @Module({
     imports: [
         TypeOrmModule.forRootAsync({
+           
             imports: [ConfigModule],
             useFactory: (configService: ConfigService) => ({
                 type: 'mysql',
@@ -22,10 +23,11 @@ import { Profile } from "./entities/profile.entity";
                 password: configService.get<string>('database.password'),
                 database: configService.get('database.name'),
                 synchronize: false,
-                entities: [UserEntity, DoctorEntity, Review, Profile],
+                entities: [UserEntity, DoctorEntity, Review, Profile]
             }),
             inject: [ConfigService]
-        })
+        }),
+        
     ],
     providers: [UserRepository, DoctorRepository, ProfileRepository],
     exports: [UserRepository, DoctorRepository, ProfileRepository]
