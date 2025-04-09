@@ -75,7 +75,7 @@ export class AuthService{
              }   
  
              const accessToken : string = await this.generateAccessToken(payload);
- 
+             console.log(accessToken)
              const refreshToken : string = await this.generateRefreshToken(doctor.id);
  
              await this.doctorRepository.setRefreshToken(doctor.id, refreshToken);

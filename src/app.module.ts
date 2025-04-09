@@ -38,14 +38,14 @@ export class AppModule {
 
   configure(consumer : MiddlewareConsumer){
     consumer.apply(AuthMiddleware)
+      .exclude({
+        path: '/doctor/register',
+        method: RequestMethod.ALL
+      })
     .forRoutes(
       {
-        path : '/auth/doctor/logout',
-        method : RequestMethod.ALL
-      },
-      {
-        path : '/auth/user/logout',
-        method : RequestMethod.ALL
+        path: '/doctor/*',
+        method: RequestMethod.ALL
       }
     )
   }

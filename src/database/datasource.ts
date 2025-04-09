@@ -1,5 +1,9 @@
 import { DataSource } from "typeorm";
 import * as dotenv from 'dotenv';
+import { UserEntity } from "./entities/user.entity";
+import { Profile } from "./entities/profile.entity";
+import { DoctorEntity } from "./entities/doctor.entity";
+import { Review } from "./entities/review.entity";
 dotenv.config();
 
 export const MySQLDataSource = new DataSource({
@@ -9,7 +13,7 @@ export const MySQLDataSource = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    entities: ['**/*.entity.js'],
+  entities: [UserEntity, Profile, DoctorEntity, Review],
     synchronize: false,
-    migrations: ['src/migrations/**/*{.ts,.js}'],
+  migrations: ['src/migrations/**/*{.ts,.js}'],
   });
