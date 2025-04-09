@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import * as bcrypt from 'bcrypt'
 import { UserType } from "./enums";
+import { Profile } from "./profile.entity";
 
 @Entity({name : 'doctors'})
 export class DoctorEntity{
@@ -29,6 +30,10 @@ export class DoctorEntity{
         default : UserType.Doctor
     })
     userType : UserType
+
+    @OneToOne(() => Profile, (profile) => profile.doctor)
+    @JoinColumn()
+    profile: Profile;
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;

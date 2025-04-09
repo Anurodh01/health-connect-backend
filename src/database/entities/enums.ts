@@ -4,5 +4,21 @@ export enum UserType {
 }
 
 export enum speciality { 
-    
+    PHYSICIAN = "physician",
+    DENTIST = 'dentist',
+    ENT = 'ent',
+    CARDIOLOGIST = 'Cardiologist',
+    NEUROLOGIST = 'Neurologist',
+    GYNECOLOGIST = 'Gynecologist',
+    ONCOLOGGIST = 'Oncologist'
+}
+
+export enum degree {
+    MBBS = "mbbs", MD = "md", DO = "do", BDS = "bds", BHMS = "bhms", BAMS = "bams", DNB = "dnb", PharmD = "pharmd",
+    MS = "ms", MSc = "msc", PhD = "phd", Physiotherapy = "physio", other = "other"
+}
+
+export enum VerificationStatus {
+    AWAITING_VERIFICATION,
+    VERIFIED
 }
