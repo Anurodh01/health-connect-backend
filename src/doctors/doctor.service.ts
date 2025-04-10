@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { DoctorEntity } from "src/database/entities/doctor.entity";
+import { Profile } from "src/database/entities/profile.entity";
 import { DoctorRepository } from "src/database/repositories/doctor.repository";
 import { ProfileRepository } from "src/database/repositories/profile.repository";
 import { ProfileDto } from "src/dto/profile.dto";
@@ -50,9 +51,9 @@ export class DoctorService {
         if (doctor.profile) {
             return doctor.profile;
         }
-        const profile = await this.profileRepository.createProfile(doctor, profiledto);
+        const profile: Profile = await this.profileRepository.createProfile(doctor, profiledto);
         doctor.profile = profile;
-        const data = await this.doctorRepository.save(doctor);
+        await this.doctorRepository.save(doctor);
         return profile;
     }
 

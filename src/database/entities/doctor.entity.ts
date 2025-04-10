@@ -32,7 +32,6 @@ export class DoctorEntity{
     userType : UserType
 
     @OneToOne(() => Profile, (profile) => profile.doctor)
-    @JoinColumn()
     profile: Profile;
 
     @CreateDateColumn({ type: 'timestamp' })
