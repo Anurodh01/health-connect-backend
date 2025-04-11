@@ -1,6 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { UserEntity } from "../entities/user.entity";
+import { UserProfileEntity } from "../entities/userprofile.entity";
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity>{
@@ -13,6 +14,17 @@ export class UserRepository extends Repository<UserEntity>{
 
         const user = this.create(userData);
 
+        return await this.save(user);
+    }
+
+    async updateProfile(id:number, profile : UserProfileEntity){
+        const user = await this.findOne({where : {id}});
+
+        if(!user){
+            throw new HttpException("User not found. Cannot create profile.", HttpStatus.UNAUTHORIZED)
+        }
+
+        user.profile = profile;
         return await this.save(user);
     }
 

@@ -22,3 +22,7 @@ export enum VerificationStatus {
     AWAITING_VERIFICATION,
     VERIFIED
 }
+
+export enum gender { 
+    Male, Female, Transgender
+}

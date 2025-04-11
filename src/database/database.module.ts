@@ -8,6 +8,8 @@ import { UserEntity } from "./entities/user.entity";
 import { DoctorEntity } from "./entities/doctor.entity";
 import { Review } from "./entities/review.entity";
 import { Profile } from "./entities/profile.entity";
+import { UserProfileEntity } from "./entities/userprofile.entity";
+import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
 
 
 @Module({
@@ -22,8 +24,8 @@ import { Profile } from "./entities/profile.entity";
                 username: configService.get<string>('database.username'),
                 password: configService.get<string>('database.password'),
                 database: configService.get('database.name'),
-                synchronize: false,
-                entities: [UserEntity, DoctorEntity, Review, Profile]
+                synchronize: true,
+                entities: [UserEntity, DoctorEntity, Review, Profile, UserProfileEntity, MedicalHistoryEntity]
             }),
             inject: [ConfigService]
         }),
