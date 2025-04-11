@@ -44,12 +44,20 @@ export class AppModule {
       }, {
         path: '/doctor/search',
         method: RequestMethod.GET
+      },{
+        path: '/users/register',
+        method: RequestMethod.ALL
       })
     .forRoutes(
       {
         path: '/doctor/*',
         method: RequestMethod.ALL
-      },{
+      },
+      {
+        path : '/users/*',
+        method : RequestMethod.ALL
+      }
+      ,{
         path : '/auth/doctor/logout',
         method : RequestMethod.ALL
       },

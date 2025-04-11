@@ -10,6 +10,7 @@ import { Review } from "./entities/review.entity";
 import { Profile } from "./entities/profile.entity";
 import { UserProfileEntity } from "./entities/userprofile.entity";
 import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
+import { UserProfileRepository } from "./repositories/userprofile.repository";
 
 
 @Module({
@@ -24,15 +25,15 @@ import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
                 username: configService.get<string>('database.username'),
                 password: configService.get<string>('database.password'),
                 database: configService.get('database.name'),
-                synchronize: false,
+                synchronize: true,
                 entities: [UserEntity, DoctorEntity, Review, Profile, UserProfileEntity, MedicalHistoryEntity]
             }),
             inject: [ConfigService]
         }),
         
     ],
-    providers: [UserRepository, DoctorRepository, ProfileRepository],
-    exports: [UserRepository, DoctorRepository, ProfileRepository]
+    providers: [UserRepository, DoctorRepository, ProfileRepository,UserProfileRepository],
+    exports: [UserRepository, DoctorRepository, ProfileRepository,UserProfileRepository]
    
 })
 export class DatabaseModule{}

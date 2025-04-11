@@ -1,5 +1,5 @@
-import { Type } from "class-transformer";
-import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsObject, IsString, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { IsDate, IsDateString, IsEnum, IsNotEmpty, IsNumber, IsObject, IsString, ValidateNested } from "class-validator";
 import { gender } from "src/database/entities/enums";
 
 export class Location{
@@ -16,8 +16,8 @@ export class Location{
 export class UserProfileDto{
 
     @IsNotEmpty()
-    @IsDate()
-    dateofbirth : Date
+    @IsDateString()
+    dateofbirth : string
 
     @IsNotEmpty()
     @IsEnum(gender)
@@ -38,6 +38,10 @@ export class UserProfileDto{
     @IsNotEmpty()
     @IsString()
     country : string
+
+    @IsNotEmpty()
+    @IsNumber()
+    pincode : number
 
     @IsObject()
     @ValidateNested()

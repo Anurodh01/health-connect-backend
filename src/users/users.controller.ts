@@ -1,7 +1,7 @@
 import { Body, Controller, HttpException, HttpStatus, InternalServerErrorException, Post, Req, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { UsersService } from "./users.service";
-import { registerUserParams } from "src/utils/types";
+import { registerUserParams, userProfileParams } from "src/utils/types";
 import { UserType } from "src/database/entities/enums";
 import { UserProfileDto } from "src/dto/userprofile.dto";
 import { Request } from "express";
@@ -47,15 +47,30 @@ export class UsersController{
     async createUserProfile(@Body(new ValidationPipe()) profile : UserProfileDto, @Req() req : Request){
 
         try{
-
+            console.log("controller reached");
+            
             const user = req['user'];
-            const savedUser = await this.userService.createProfile(user.id, profile)
+
+            const data : userProfileParams = {
+                dateofbirth: new Date(profile.dateofbirth),
+                gender: profile.gender,
+                locality: profile.locality,
+                city: profile.city,
+                state: profile.state,
+                country: profile.country,
+                pincode : profile.pincode,
+                location: profile.location
+            }
+            
+            
+                data.dateofbirth = new Date(profile.dateofbirth);
+            const savedUser = await this.userService.createProfile(user.id, data)
 
             return {
                 success : true,
                 message : "Profile created successfully",
                 userDetails : {
-                    
+                    ...savedUser
                 }
             }
         }

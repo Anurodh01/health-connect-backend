@@ -24,5 +24,5 @@ export enum VerificationStatus {
 }
 
 export enum gender { 
-    Male, Female, Transgender
+    Male="Male", Female="Female", Transgender="Trans"
 }

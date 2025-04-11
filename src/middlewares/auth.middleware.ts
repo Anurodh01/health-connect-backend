@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NestMiddleware, NotFoundException, Una
 import { JwtService } from "@nestjs/jwt";
 import { NextFunction, Request, Response } from "express";
 import { DoctorEntity } from "src/database/entities/doctor.entity";
+import { UserType } from "src/database/entities/enums";
 import { DoctorService } from "src/doctors/doctor.service";
 
 @Injectable()
@@ -27,8 +28,10 @@ export class AuthMiddleware implements NestMiddleware{
             )
 
             console.log("Auth middleware payload extracted from user: ", payload);
-            
-            const user: DoctorEntity = await this.doctorService.getDoctorDetail(payload.id);
+
+
+            if(payload.userType === UserType.Doctor){
+                const user: DoctorEntity = await this.doctorService.getDoctorDetail(payload.id);
             if (!user) {
                 throw new NotFoundException("User doesn't exist!");
             }
@@ -37,6 +40,12 @@ export class AuthMiddleware implements NestMiddleware{
             }
             req['user'] = user;
             next();
+            }
+
+            req['user'] = payload;
+            next()
+            
+            
             
         } catch (error) {
             throw new UnauthorizedException(error.message);

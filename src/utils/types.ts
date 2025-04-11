@@ -26,5 +26,6 @@ export type userProfileParams = {
     city:string
     state:string
     country:string
+    pincode:number
     location:Location
 }

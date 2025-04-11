@@ -33,7 +33,9 @@ export class UserRepository extends Repository<UserEntity>{
     }
 
     async findById(id : number) : Promise<UserEntity | null>{
-        return await this.findById(id);
+        console.log("User repo :: find by id ",id );
+        
+        return await this.findOne({where : {id}});
     }
 
     async setRefreshToken(userId: number, refreshToken : string) : Promise<void>{

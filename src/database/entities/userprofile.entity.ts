@@ -34,7 +34,7 @@ export class UserProfileEntity {
         type: 'longtext',
         nullable: true
     })
-    locality: string
+    area: string
 
     @Column({
         type: 'text'
@@ -51,8 +51,10 @@ export class UserProfileEntity {
     })
     country: string
 
-    @Column()
-    pincode: string;
+    @Column({
+        type : 'int'
+    })
+    pincode: number;
 
     @Column({
         type: 'simple-json'
