@@ -38,7 +38,7 @@ export class DoctorService {
     }
 
     async getDoctorDetail(id: number) {
-        const doctor = await this.doctorRepository.findOne({ where: { id }, relations: ['profile'] });
+        const doctor = await this.doctorRepository.findOne({ where: { id }, relations: { profile: { reviews: true } } });
         if (!doctor) {
             throw new NotFoundException('Doctor Details Not Found!');
         }
