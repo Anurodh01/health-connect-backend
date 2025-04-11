@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { UserRepository } from "src/database/repositories/user.repository";
-import { registerUserParams } from "src/utils/types";
+import { registerUserParams, userProfileParams } from "src/utils/types";
 
 @Injectable()
 export class UsersService{
@@ -25,6 +25,15 @@ export class UsersService{
         } catch (error) {
             throw new HttpException(error, HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+
+    async createProfile(id:number, profile : userProfileParams){
+
+        const user = await this.userRepository.findById(id);
+
+
     }
         
     

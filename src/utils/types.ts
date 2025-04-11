@@ -1,4 +1,5 @@
-import { UserType } from "src/database/entities/enums"
+import { gender, UserType } from "src/database/entities/enums"
+import { Location } from "src/dto/profile.dto"
 
 export type registerUserParams = {
 
@@ -16,4 +17,14 @@ export type registerDoctorParams = {
     phone:string,
     password:string
     userType:UserType.Doctor
+}
+
+export type userProfileParams = {
+    dateofbirth : Date
+    gender : gender
+    locality:string
+    city:string
+    state:string
+    country:string
+    location:Location
 }

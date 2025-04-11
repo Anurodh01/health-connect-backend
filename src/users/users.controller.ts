@@ -1,8 +1,10 @@
-import { Body, Controller, HttpException, HttpStatus, Post, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, HttpException, HttpStatus, InternalServerErrorException, Post, Req, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { UsersService } from "./users.service";
 import { registerUserParams } from "src/utils/types";
 import { UserType } from "src/database/entities/enums";
+import { UserProfileDto } from "src/dto/userprofile.dto";
+import { Request } from "express";
 
 @Controller('users')
 export class UsersController{
@@ -39,5 +41,26 @@ export class UsersController{
             throw new HttpException(error, HttpStatus.BAD_REQUEST)
         }
         
+    }
+
+    @Post('profile')
+    async createUserProfile(@Body(new ValidationPipe()) profile : UserProfileDto, @Req() req : Request){
+
+        try{
+
+            const user = req['user'];
+            const savedUser = await this.userService.createProfile(user.id, profile)
+
+            return {
+                success : true,
+                message : "Profile created successfully",
+                userDetails : {
+                    
+                }
+            }
+        }
+        catch(error){
+            throw new InternalServerErrorException(error.message)
+        }
     }
 }

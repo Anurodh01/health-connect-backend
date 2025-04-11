@@ -27,16 +27,16 @@ export class UserProfileEntity {
     gender : gender
 
 
-    @Column({
-        type: 'longtext',
-    })
-    address: string
+    // @Column({
+    //     type: 'longtext',
+    // })
+    // address: string
 
     @Column({
         type: 'longtext',
         nullable: true
     })
-    area: string
+    locality: string
 
     @Column({
         type: 'text'
