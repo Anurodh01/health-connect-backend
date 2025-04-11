@@ -1,8 +1,10 @@
-import { Body, Controller, HttpException, HttpStatus, Post, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, HttpException, HttpStatus, Param, ParseIntPipe, Post, Req, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { UsersService } from "./users.service";
 import { registerUserParams } from "src/utils/types";
 import { UserType } from "src/database/entities/enums";
+import { Request } from "express";
+import { ReviewDto } from "src/dto/review.dto";
 
 @Controller('users')
 export class UsersController{
@@ -39,5 +41,10 @@ export class UsersController{
             throw new HttpException(error, HttpStatus.BAD_REQUEST)
         }
         
+    }
+    @Post('/review/:doctorId')
+    giveReviewForDoctor(@Req() req: Request, @Param('doctorId', ParseIntPipe) docterId: number, @Body(ValidationPipe) reviewdto: ReviewDto) {
+        // const user = req['user'];
+        return this.userService.createReview(docterId, reviewdto);
     }
 }

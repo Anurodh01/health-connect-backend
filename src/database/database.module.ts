@@ -10,6 +10,7 @@ import { Review } from "./entities/review.entity";
 import { Profile } from "./entities/profile.entity";
 import { UserProfileEntity } from "./entities/userprofile.entity";
 import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
+import { ReviewRepository } from "./repositories/review.repository";
 
 
 @Module({
@@ -31,8 +32,8 @@ import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
         }),
         
     ],
-    providers: [UserRepository, DoctorRepository, ProfileRepository],
-    exports: [UserRepository, DoctorRepository, ProfileRepository]
+    providers: [UserRepository, DoctorRepository, ProfileRepository, ReviewRepository],
+    exports: [UserRepository, DoctorRepository, ProfileRepository, ReviewRepository]
    
 })
 export class DatabaseModule{}
