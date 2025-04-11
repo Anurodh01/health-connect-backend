@@ -21,7 +21,23 @@ export class ProfileDto{
 
     @IsString()
     @IsNotEmpty()
-    clinicAddress: string;
+    area: string
+
+    @IsString()
+    @IsNotEmpty()
+    city: string
+
+    @IsString()
+    @IsNotEmpty()
+    state: string
+
+    @IsString()
+    @IsNotEmpty()
+    country: string
+
+    @IsString()
+    @IsNotEmpty()
+    pincode: string;
 
     @IsObject()
     @ValidateNested()

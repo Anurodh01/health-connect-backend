@@ -1,10 +1,11 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Req, UseInterceptors, ValidationPipe } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Query, Req, UseInterceptors, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { DoctorService } from "./doctor.service";
 import { registerDoctorParams } from "src/utils/types";
 import { UserType } from "src/database/entities/enums";
 import { ProfileDto } from "src/dto/profile.dto";
 import { Request } from "express";
+import { SearchQueryParamDto } from "src/dto/search-query.dto";
 
 @Controller('doctor')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -24,6 +25,12 @@ export class DoctorController{
             }
         return await this.doctorService.registerDoctor(doctorData);
     }
+
+    @Get('/search')
+    searchDoctors(@Query(ValidationPipe) searchQuery: SearchQueryParamDto) {
+        return this.doctorService.searchDoctor(searchQuery);
+    }
+
     @Get('detail')
     getDoctorDetail(@Req() req: Request) {
         const authenticatedUser = req['user']

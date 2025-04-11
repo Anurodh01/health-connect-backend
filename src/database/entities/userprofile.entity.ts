@@ -26,11 +26,9 @@ export class UserProfileEntity {
     })
     gender : gender
 
-
-    // @Column({
-    //     type: 'longtext',
-    // })
-    // address: string
+    get address() {
+        return `${this.area}, ${this.city}, ${this.state}, ${this.country}, ${this.pincode}`
+    }
 
     @Column({
         type: 'longtext',
@@ -52,6 +50,9 @@ export class UserProfileEntity {
         type: 'text'
     })
     country: string
+
+    @Column()
+    pincode: string;
 
     @Column({
         type: 'simple-json'

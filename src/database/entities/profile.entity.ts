@@ -27,10 +27,33 @@ export class Profile{
     })
     degree: degree;
 
+    get address() {
+        return `${this.area}, ${this.city}, ${this.state}, ${this.country}, ${this.pincode}`
+    }
+
+    @Column({
+        type: 'longtext',
+        nullable: true
+    })
+    area: string
+
     @Column({
         type: 'text'
     })
-    clinicAddress: string;
+    city: string
+
+    @Column({
+        type: 'text'
+    })
+    state: string
+
+    @Column({
+        type: 'text'
+    })
+    country: string
+
+    @Column()
+    pincode: string;
 
     @Column({
         type: 'simple-json'

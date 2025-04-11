@@ -24,7 +24,7 @@ import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
                 username: configService.get<string>('database.username'),
                 password: configService.get<string>('database.password'),
                 database: configService.get('database.name'),
-                synchronize: true,
+                synchronize: false,
                 entities: [UserEntity, DoctorEntity, Review, Profile, UserProfileEntity, MedicalHistoryEntity]
             }),
             inject: [ConfigService]

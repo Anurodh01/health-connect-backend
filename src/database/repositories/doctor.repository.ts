@@ -15,6 +15,7 @@ export class DoctorRepository extends Repository<DoctorEntity>{
         
 
         const doctor = this.create(doctorData);
+        doctor.isLoggedOut = true;
         return await this.save(doctor);
         
         
@@ -25,7 +26,7 @@ export class DoctorRepository extends Repository<DoctorEntity>{
     }
 
     async setRefreshToken(userId: number, refreshToken : string) : Promise<void>{
-        await this.update(userId, {refreshToken});
+        await this.update(userId, { isLoggedOut: false, refreshToken });
     }
     async clearRefreshToken(userId:number) : Promise<void>{
         await this.update(userId, {refreshToken : null});
