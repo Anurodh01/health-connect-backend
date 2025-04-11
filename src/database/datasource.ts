@@ -4,6 +4,8 @@ import { UserEntity } from "./entities/user.entity";
 import { Profile } from "./entities/profile.entity";
 import { DoctorEntity } from "./entities/doctor.entity";
 import { Review } from "./entities/review.entity";
+import { UserProfileEntity } from "./entities/userprofile.entity";
+import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
 dotenv.config();
 
 export const MySQLDataSource = new DataSource({
@@ -13,7 +15,7 @@ export const MySQLDataSource = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-  entities: [UserEntity, Profile, DoctorEntity, Review],
+  entities: [UserEntity, Profile, DoctorEntity, Review, UserProfileEntity, MedicalHistoryEntity],
     synchronize: false,
   migrations: ['src/migrations/**/*{.ts,.js}'],
   });

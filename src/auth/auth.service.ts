@@ -113,7 +113,7 @@ export class AuthService{
              const refreshToken : string = await this.generateRefreshToken(doctor.id);
  
              await this.doctorRepository.setRefreshToken(doctor.id, refreshToken);
- 
+
              return {accessToken, refreshToken, userDetails : payload}
          }else{
             throw new UnauthorizedException('Invalid credentials');

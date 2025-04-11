@@ -41,6 +41,9 @@ export class AppModule {
       .exclude({
         path: '/doctor/register',
         method: RequestMethod.ALL
+      }, {
+        path: '/doctor/search',
+        method: RequestMethod.GET
       })
     .forRoutes(
       {
