@@ -6,6 +6,7 @@ import { UserEntity } from "src/database/entities/user.entity";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { DatabaseModule } from "src/database/database.module";
+import { DoctorModule } from "src/doctors/doctors.module";
 
 
 @Module({
@@ -13,7 +14,8 @@ import { DatabaseModule } from "src/database/database.module";
         JwtModule.register({
             global:true
         }),
-        DatabaseModule
+        DatabaseModule,
+        DoctorModule
     ],
     controllers : [AuthController],
     providers : [AuthService]

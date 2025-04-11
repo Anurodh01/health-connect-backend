@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class registerdto {
 
@@ -8,10 +8,12 @@ export class registerdto {
 
     @IsNotEmpty()
     @IsString()
+    @IsEmail()
     email:string
 
     @IsString()
-    phone:string
+    @IsOptional()
+    phone?:string
 
     @IsNotEmpty()
     @IsString()

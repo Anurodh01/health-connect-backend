@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import * as bcrypt from 'bcrypt'
 import { UserType } from "./enums";
 import { Profile } from "./profile.entity";
@@ -39,6 +39,12 @@ export class DoctorEntity{
 
     @UpdateDateColumn({ type: 'timestamp' })
     updatedAt: Date;
+
+    @DeleteDateColumn({ type: 'timestamp' })
+    deletedAt: Date;
+
+    @Column()
+    isLoggedOut: boolean;
 
     @BeforeInsert()
     async hashPassword(){

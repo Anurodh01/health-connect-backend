@@ -70,5 +70,14 @@ export class DoctorService {
         return doctor.profile;
     }
 
+    async deleteDoctor(id: number) {
+        const doctor = await this.doctorRepository.findOne({ where: { id: id } });
+        if (doctor.profile) {
+            await this.profileRepository.remove(doctor.profile);
+        }
+        const deletedDoctor = await this.doctorRepository.softDelete(id);
+        return { id: id, "deleted": deletedDoctor.raw }
+    }
+
 
 }

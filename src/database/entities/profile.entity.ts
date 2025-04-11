@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { degree, speciality, VerificationStatus } from "./enums";
 import { Review } from "./review.entity";
 import { DoctorEntity } from "./doctor.entity";
@@ -60,4 +60,7 @@ export class Profile{
 
     @UpdateDateColumn({type: 'timestamp'})
     updatedAt: Date;
+
+    @DeleteDateColumn({ type: 'timestamp' })
+    deletedAt: Date;
 }

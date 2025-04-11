@@ -8,5 +8,5 @@ export class logindto{
 
     @IsNotEmpty()
     @IsString()
-    password
+    password:string;
 }

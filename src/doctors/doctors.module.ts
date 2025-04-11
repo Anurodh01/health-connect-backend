@@ -7,7 +7,8 @@ import { DatabaseModule } from "src/database/database.module";
 @Module({
     imports: [DatabaseModule],
     controllers:[DoctorController],
-    providers:[DoctorService]
+    providers: [DoctorService],
+    exports: [DoctorService]
 })
 export class DoctorModule{
 

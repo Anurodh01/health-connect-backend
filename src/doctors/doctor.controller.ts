@@ -1,4 +1,4 @@
-import { Body, ClassSerializerInterceptor, Controller, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Req, UseInterceptors, ValidationPipe } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Req, UseInterceptors, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { DoctorService } from "./doctor.service";
 import { registerDoctorParams } from "src/utils/types";
@@ -36,6 +36,13 @@ export class DoctorController{
 
         let id = authenticatedUser?.id;
         return await this.doctorService.createProfile(id, profileDto);
+    }
+
+    @Delete('/soft-delete')
+    deleteDoctorDetail(@Req() req: Request) {
+        const authenticatedUser = req['user']
+        let id = authenticatedUser?.id;
+        return this.doctorService.deleteDoctor(id);
     }
 
     @Get('profile')
