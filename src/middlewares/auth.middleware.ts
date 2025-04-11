@@ -1,11 +1,13 @@
-import { Injectable, NestMiddleware, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, NestMiddleware, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { NextFunction, Request, Response } from "express";
+import { DoctorEntity } from "src/database/entities/doctor.entity";
+import { DoctorService } from "src/doctors/doctor.service";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware{
 
-    constructor(private jwtService : JwtService){}
+    constructor(private jwtService: JwtService, private doctorService: DoctorService) { }
 
     async use(req: Request, res : Response, next : NextFunction){
 
@@ -26,8 +28,14 @@ export class AuthMiddleware implements NestMiddleware{
 
             console.log("Auth middleware payload extracted from user: ", payload);
             
-
-            req['user'] = payload;
+            const user: DoctorEntity = await this.doctorService.getDoctorDetail(payload.id);
+            if (!user) {
+                throw new NotFoundException("User doesn't exist!");
+            }
+            if (user && user.isLoggedOut) {
+                throw new BadRequestException("Invalid Token");
+            }
+            req['user'] = user;
             next();
             
         } catch (error) {

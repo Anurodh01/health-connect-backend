@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { degree, speciality, VerificationStatus } from "./enums";
 import { Review } from "./review.entity";
 import { DoctorEntity } from "./doctor.entity";
+import { Transform } from "class-transformer";
 class Location{
         latitude: number;
         longitude: number;
@@ -39,7 +40,9 @@ export class Profile{
     @Column({type: 'simple-array'})
     availability: string[];
 
-    @OneToOne(()=> DoctorEntity, (doctor)=> doctor.profile)
+    @OneToOne(() => DoctorEntity, (doctor) => doctor.profile, { onDelete: 'CASCADE' })
+    @Transform(({ value }) => value.id)
+    @JoinColumn()
     doctor: DoctorEntity;
 
     @OneToMany(()=> Review, (review)=> review.profile)
@@ -57,4 +60,7 @@ export class Profile{
 
     @UpdateDateColumn({type: 'timestamp'})
     updatedAt: Date;
+
+    @DeleteDateColumn({ type: 'timestamp' })
+    deletedAt: Date;
 }

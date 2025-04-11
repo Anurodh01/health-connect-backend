@@ -1,13 +1,13 @@
-import { Body, Controller, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Req, ValidationPipe } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Post, Req, UseInterceptors, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { DoctorService } from "./doctor.service";
 import { registerDoctorParams } from "src/utils/types";
 import { UserType } from "src/database/entities/enums";
 import { ProfileDto } from "src/dto/profile.dto";
 import { Request } from "express";
-import { instanceToPlain } from "class-transformer";
 
 @Controller('doctor')
+@UseInterceptors(ClassSerializerInterceptor)
 export class DoctorController{
 
     constructor(private doctorService : DoctorService){}
@@ -36,6 +36,13 @@ export class DoctorController{
 
         let id = authenticatedUser?.id;
         return await this.doctorService.createProfile(id, profileDto);
+    }
+
+    @Delete('/soft-delete')
+    deleteDoctorDetail(@Req() req: Request) {
+        const authenticatedUser = req['user']
+        let id = authenticatedUser?.id;
+        return this.doctorService.deleteDoctor(id);
     }
 
     @Get('profile')
