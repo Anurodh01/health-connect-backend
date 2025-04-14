@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Post, Req, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, InternalServerErrorException, Post, Req, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { UsersService } from "./users.service";
 import { registerUserParams, userProfileParams } from "src/utils/types";
 import { UserType } from "src/database/entities/enums";
 import { UserProfileDto } from "src/dto/userprofile.dto";
 import { Request } from "express";
+import { ReviewDto } from "src/dto/review.dto";
 
 @Controller('users')
 export class UsersController{
@@ -92,5 +93,10 @@ export class UsersController{
     @Get('allappointments')
     async getAllAppointments(){
 
+    }
+    @Post('/review/:doctorId')
+    giveReviewForDoctor(@Req() req: Request, @Param('doctorId', ParseIntPipe) docterId: number, @Body(ValidationPipe) reviewdto: ReviewDto) {
+        // const user = req['user'];
+        return this.userService.createReview(docterId, reviewdto);
     }
 }
