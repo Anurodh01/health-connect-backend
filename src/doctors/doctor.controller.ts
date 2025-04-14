@@ -6,6 +6,7 @@ import { UserType } from "src/database/entities/enums";
 import { ProfileDto } from "src/dto/profile.dto";
 import { Request } from "express";
 import { SearchQueryParamDto } from "src/dto/search-query.dto";
+import { doctorAvailabilityDto } from "src/dto/doctoravailability.dto";
 
 @Controller('doctor')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -56,6 +57,27 @@ export class DoctorController{
     async getProfile(@Req() req: Request) {
         const authenticatedUser = req['user'];
         let id = authenticatedUser?.id;
-        return this.doctorService.getProfile(id);
+        return await this.doctorService.getProfile(id);
     }
+
+    @Post('doctoravailability')
+    async postDoctorAvailability(@Req() req : Request, @Body( new ValidationPipe() ) payload : doctorAvailabilityDto){
+
+        const user = req['user'];
+        const savedDetails = await this.doctorService.saveDoctorAvailabilityDetails(user.id, payload);
+
+        return {
+            success : true,
+            message : "Doctor saved successfully",
+            ...savedDetails
+        }
+
+    }
+
+    @Get('doctoravailability')
+    async getDoctorAvailability(){
+
+    }
+
+
 }

@@ -11,8 +11,9 @@ export class UserProfileRepository extends Repository<UserProfileEntity>{
         super(UserProfileEntity, datasource.createEntityManager());
     }
 
-    async createUserProfile(profileData : Partial <UserProfileEntity>){
+    async createUserProfile( user : UserEntity,  profileData : Partial <UserProfileEntity>){
             const newProfile = this.create(profileData);
+            
             const profile = await this.save(newProfile);
 
             return profile;

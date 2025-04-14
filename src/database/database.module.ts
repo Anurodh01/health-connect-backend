@@ -11,6 +11,9 @@ import { Profile } from "./entities/profile.entity";
 import { UserProfileEntity } from "./entities/userprofile.entity";
 import { MedicalHistoryEntity } from "./entities/medicalhistory.entity";
 import { UserProfileRepository } from "./repositories/userprofile.repository";
+import { DoctorAvailabilityRepository } from "./repositories/doctoravailability.repository";
+import { DoctorAvailabilityEntity } from "./entities/doctoravailability.entity";
+import { appointmentEntity } from "./entities/appointment.entity";
 
 
 @Module({
@@ -26,14 +29,14 @@ import { UserProfileRepository } from "./repositories/userprofile.repository";
                 password: configService.get<string>('database.password'),
                 database: configService.get('database.name'),
                 synchronize: true,
-                entities: [UserEntity, DoctorEntity, Review, Profile, UserProfileEntity, MedicalHistoryEntity]
+                entities: [UserEntity, DoctorEntity, Review, Profile, UserProfileEntity, MedicalHistoryEntity, DoctorAvailabilityEntity, appointmentEntity]
             }),
             inject: [ConfigService]
         }),
         
     ],
-    providers: [UserRepository, DoctorRepository, ProfileRepository,UserProfileRepository],
-    exports: [UserRepository, DoctorRepository, ProfileRepository,UserProfileRepository]
+    providers: [UserRepository, DoctorRepository, ProfileRepository,UserProfileRepository, DoctorAvailabilityRepository],
+    exports: [UserRepository, DoctorRepository, ProfileRepository,UserProfileRepository,DoctorAvailabilityRepository]
    
 })
 export class DatabaseModule{}

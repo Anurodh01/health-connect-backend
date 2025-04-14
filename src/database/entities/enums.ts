@@ -13,6 +13,16 @@ export enum speciality {
     ONCOLOGGIST = 'Oncologist'
 }
 
+export enum weekdays {
+    MONDAY = "monday",
+    TUESDAY = "tuesday",
+    WEDNESDAY = "wednesday",
+    THRUSDAY = "thrusday",
+    FRIDAY = "friday",
+    SATURDAY = "saturday",
+    SUNDAY = "sunday"
+}
+
 export enum degree {
     MBBS = "mbbs", MD = "md", DO = "do", BDS = "bds", BHMS = "bhms", BAMS = "bams", DNB = "dnb", PharmD = "pharmd",
     MS = "ms", MSc = "msc", PhD = "phd", Physiotherapy = "physio", other = "other"

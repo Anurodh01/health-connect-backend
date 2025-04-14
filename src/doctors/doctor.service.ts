@@ -2,7 +2,9 @@ import { HttpException, HttpStatus, Injectable, InternalServerErrorException, No
 import { DoctorEntity } from "src/database/entities/doctor.entity";
 import { Profile } from "src/database/entities/profile.entity";
 import { DoctorRepository } from "src/database/repositories/doctor.repository";
+import { DoctorAvailabilityRepository } from "src/database/repositories/doctoravailability.repository";
 import { ProfileRepository } from "src/database/repositories/profile.repository";
+import { doctorAvailabilityDto } from "src/dto/doctoravailability.dto";
 import { ProfileDto } from "src/dto/profile.dto";
 import { SearchQueryParamDto } from "src/dto/search-query.dto";
 import { registerDoctorParams } from "src/utils/types";
@@ -11,7 +13,11 @@ import { Like } from "typeorm";
 @Injectable()
 export class DoctorService {
 
-    constructor(private doctorRepository: DoctorRepository, private profileRepository: ProfileRepository) {
+    constructor(
+        private doctorRepository: DoctorRepository, 
+        private profileRepository: ProfileRepository,
+        private doctorAvailabilityRepository : DoctorAvailabilityRepository
+    ) {
 
     }
 
@@ -99,5 +105,27 @@ export class DoctorService {
             take: limit
         });
         return result;
+    }
+
+    async saveDoctorAvailabilityDetails(email : string, payload :doctorAvailabilityDto){
+
+        const doctor = await this.doctorRepository.findByEmail(email);
+
+        if(!doctor) {
+            throw new HttpException('Doctor not found', HttpStatus.BAD_REQUEST)
+
+        }
+
+        const savedAvailabilityData = await this.doctorAvailabilityRepository.createAvailability( doctor, payload);
+
+        
+        return savedAvailabilityData;
+
+
+
+
+
+
+
     }
 }

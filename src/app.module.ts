@@ -11,6 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { DatabaseConfig } from './config/database.config';
 import { GlobalExceptionHandler } from './filters/exception.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { DoctorAuthMiddleware } from './middlewares/auth.doctor.middleware';
 
 @Module({
   imports: [
@@ -36,31 +37,41 @@ import { APP_FILTER } from '@nestjs/core';
 })
 export class AppModule {
 
+
+
   configure(consumer : MiddlewareConsumer){
-    consumer.apply(AuthMiddleware)
-      .exclude({
-        path: '/doctor/register',
-        method: RequestMethod.ALL
-      }, {
-        path: '/doctor/search',
-        method: RequestMethod.GET
-      },{
-        path: '/users/register',
-        method: RequestMethod.ALL
-      })
-    .forRoutes(
+    consumer.apply(DoctorAuthMiddleware).exclude(
+      
+        {
+          path: '/doctor/register',
+          method: RequestMethod.ALL
+        }, {
+          path: '/doctor/search',
+          method: RequestMethod.GET
+        }
+      
+    ).forRoutes(
       {
         path: '/doctor/*',
         method: RequestMethod.ALL
       },
       {
-        path : '/users/*',
-        method : RequestMethod.ALL
-      }
-      ,{
         path : '/auth/doctor/logout',
         method : RequestMethod.ALL
       },
+    )
+    consumer.apply(AuthMiddleware)
+      .exclude({
+        path: '/users/register',
+        method: RequestMethod.ALL
+      })
+    .forRoutes(
+      
+      {
+        path : '/users/*',
+        method : RequestMethod.ALL
+      }
+      ,
       {
         path : '/auth/user/logout',
         method : RequestMethod.ALL

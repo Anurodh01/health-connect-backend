@@ -4,17 +4,18 @@ import { NextFunction, Request, Response } from "express";
 import { DoctorEntity } from "src/database/entities/doctor.entity";
 import { UserType } from "src/database/entities/enums";
 import { DoctorService } from "src/doctors/doctor.service";
+import { UsersService } from "src/users/users.service";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware{
 
-    constructor(private jwtService: JwtService, private doctorService: DoctorService) { }
+    constructor(private jwtService: JwtService, private userService : UsersService) { }
 
     async use(req: Request, res : Response, next : NextFunction){
 
         try {
 
-            const token = req.cookies?.accessToken || req.headers['authorization']?.replace('Bearer  ', '');
+            const token = req.cookies?.accessToken || req.headers['authorization']?.replace('Bearer ', '');
 
             if(!token) throw new UnauthorizedException('No token provided');
 
@@ -29,20 +30,16 @@ export class AuthMiddleware implements NestMiddleware{
 
             console.log("Auth middleware payload extracted from user: ", payload);
 
+            const user = this.userService.getUserProfile(payload.id);
 
-            if(payload.userType === UserType.Doctor){
-                const user: DoctorEntity = await this.doctorService.getDoctorDetail(payload.id);
-            if (!user) {
-                throw new NotFoundException("User doesn't exist!");
+            if(!user){
+                throw new UnauthorizedException('User not found')
             }
-            if (user && user.isLoggedOut) {
-                throw new BadRequestException("Invalid Token");
+            if((await user).refreshToken === null){
+                throw new UnauthorizedException('Invalid token')
             }
+           
             req['user'] = user;
-            next();
-            }
-
-            req['user'] = payload;
             next()
             
             

@@ -61,6 +61,8 @@ export class UserProfileEntity {
     })
     location: Location;
 
+    
+
     @OneToMany( ()=> MedicalHistoryEntity, (medicalhistory) => medicalhistory.user )
     medicalHistory : MedicalHistoryEntity[];
 

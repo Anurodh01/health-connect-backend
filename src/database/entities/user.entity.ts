@@ -31,6 +31,7 @@ export class UserEntity{
     })
     userType : UserType
 
+
     @OneToOne(()=> UserProfileEntity)
     @JoinColumn()
     profile : UserProfileEntity

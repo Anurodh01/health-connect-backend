@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, HttpStatus, InternalServerErrorException, Post, Req, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Post, Req, ValidationPipe } from "@nestjs/common";
 import { registerdto } from "src/dto/register.dto";
 import { UsersService } from "./users.service";
 import { registerUserParams, userProfileParams } from "src/utils/types";
@@ -77,5 +77,20 @@ export class UsersController{
         catch(error){
             throw new InternalServerErrorException(error.message)
         }
+    }
+
+    @Post('bookappointment')
+    async bookAppointment(){
+
+    }
+
+    @Delete('cancelAppointment')
+    async cancelAppointment(){
+        
+    }
+
+    @Get('allappointments')
+    async getAllAppointments(){
+
     }
 }

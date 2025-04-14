@@ -41,17 +41,18 @@ export class UsersService{
         console.log("User service :: Create Profile :: ",user);
         
 
-        const savedProfile = await this.userProfileRepository.createUserProfile(profile);
+        const savedProfile = await this.userProfileRepository.createUserProfile(user, profile);
 
         user.profile = savedProfile;
 
-        const savedUser = await this.userRepository.save(user);
+        return await this.userRepository.save(user);
 
-        return savedUser;
+    }
 
+    async getUserProfile(id:number){
+        const user = await this.userRepository.findById(id);
 
-
-
+        return user;
 
     }
         
