@@ -121,11 +121,16 @@ export class DoctorService {
         
         return savedAvailabilityData;
 
-
-
-
-
-
-
     }
+
+    async getAvailability(doctor, incomingStartDate : Date, incomingEndDate : Date){
+
+     //   const daysInMonth = new Date(incomingStartDate.getFullYear(), incomingStartDate.)
+
+        let daysArray : string[]
+        //const daysInCurrentMonth = 
+       // for(let i = incomingStartDate.getDate, i< incomi)
+    }
+
+
 }

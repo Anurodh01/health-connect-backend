@@ -4,13 +4,14 @@ import { weekdays } from "./enums";
 import { json } from "stream/consumers";
 
 export class BookedSlots {
+    date : Date
     weekday : weekdays;
     startTime : string;
     endTime : string;
     userId : number;
 }
 
-@Entity()
+@Entity({name : 'doctor_availability'})
 export class DoctorAvailabilityEntity{
 
     @PrimaryGeneratedColumn()
